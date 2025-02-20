@@ -1,0 +1,29 @@
+/* filepath: /Users/mangesh/Project2025/labormanagement/labormanagementui/src/app/toolbar/toolbar.component.scss */
+.example-container {
+  height: calc(100vh - 64px); /* Adjust height based on toolbar height */
+  margin-top: 0; /* Remove any margin */
+  padding-top: 0; /* Remove any padding */
+  border-radius: 0px;
+}
+
+.sidenav-background {
+  background-color: #bcdaba; /* Greyish color */
+}
+
+.custom-sidenav {
+  width: 200px; /* Decrease the size of the sidenav */
+  border: none; /* Remove the border */
+}
+.main-content {
+  padding: 16px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+/* Custom toolbar color */
+.custom-toolbar {
+  background-color: #9df1a0; /* Custom green color */
+  color: white; /* Text color */
+}

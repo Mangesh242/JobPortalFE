@@ -1,0 +1,28 @@
+<mat-toolbar class="custom-toolbar">
+  <button mat-icon-button (click)="sidenav.toggle()" aria-label="Toggle sidenav"  [disabled]="!authService.isLoggedIn">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span style="color: black;">Labor Management</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" opened="false" class="sidenav-background custom-sidenav">
+    <mat-nav-list>
+      <a mat-list-item (click)="onLogout()">Home</a>
+      <a mat-list-item (click)="onLogout()">Profile</a>
+      <a mat-list-item (click)="onLogout()">Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

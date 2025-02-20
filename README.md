@@ -1,3 +1,9 @@
+#We will have 3 different type of user :
+1.One who can produce labor of different types/ user or contractor
+2.Admin to control pages
+3.Recruiter
+
+
 # Labormanagementui
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2.

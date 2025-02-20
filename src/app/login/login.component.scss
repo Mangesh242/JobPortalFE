@@ -1,0 +1,54 @@
+/* login.component.scss */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.background-container {
+  
+
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container,
+.info-section {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Add a white background with some transparency */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.signup-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
