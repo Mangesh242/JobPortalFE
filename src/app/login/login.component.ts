@@ -18,13 +18,13 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
     FormsModule,
     RouterModule,
     MatProgressSpinnerModule,
-    CommonModule,
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
     MatGridListModule,
     FlexLayoutModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CommonModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
           // Handle successful login, e.g., store token, redirect, etc.
           this.isLoading = false;
           this.router.navigate(['home']);
+          this.authService.setCurrentUser(response);
           this.authService.setLoggedIn(true);
         },
         (error) => {

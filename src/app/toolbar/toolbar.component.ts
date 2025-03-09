@@ -6,6 +6,9 @@ import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { SearchComponent } from './search/search.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../utils/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,7 +18,8 @@ import { AuthService } from '../services/auth.service';
     MatButtonModule,
     MatIconModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    SearchComponent
   ],
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
@@ -23,11 +27,28 @@ import { AuthService } from '../services/auth.service';
 export class ToolbarComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   onLogout() {
-    this.authService.logout();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '300px',
+      data: { title: 'Confirm Logout', message: 'Are you sure you want to logout?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.logout();
+        this.sidenav.close();
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+  routeToPage(route: string) {
+    this.router.navigate([route]);
     this.sidenav.close(); // Close the sidenav
-    this.router.navigate(['/login']); // Redirect to login page after logout
   }
 }

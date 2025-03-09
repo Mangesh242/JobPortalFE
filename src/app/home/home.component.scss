@@ -1,0 +1,35 @@
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    //padding: 80px 20px 20px; /* Adjust padding to account for fixed toolbar */
+  }
+  
+  .section {
+    margin: 0 10px;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .profile-section {
+    flex: 1; /* 10% of the container width */
+  }
+  /* profile-details.component.scss */
+
+  .updates-section {
+    flex: 8; /* 80% of the container width */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .job-posts-container {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px); /* Adjust height as needed */
+  }
+  
+  .blank-section {
+    flex: 1; /* 10% of the container width */
+    border-right: none;
+  }

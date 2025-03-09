@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-
+  
   private apiUrl = 'http://localhost:8080/api/v1'; // Replace with your Spring Boot API URL
 
   constructor(private httpClient: HttpClient) {}
@@ -20,10 +20,16 @@ export class AuthService {
     return this.LoggedInStatus;
   }
 
+  sendOTP(email: any):Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/forgot-password`, {
+      email 
+    });
+  }
+
   login(username: string, password: string): Observable<any> {
     return this.httpClient.post<any>(`${this.apiUrl}/login`, {
       username,
-      password,
+      password
     });
   }
 
@@ -42,9 +48,25 @@ export class AuthService {
       email,
     });
   }
+
+ updatePassword(password: string): Observable<any> {
+    const user = localStorage.getItem('user');
+    const email = user ? JSON.parse(user).email : null;
+    if(email === null){
+      console.log("No logged in user found");
+    }
+    return this.httpClient.post<any>(`${this.apiUrl}/update-password`, {
+      email,
+      password
+    });
+  }
+
   logout() {
     this.setLoggedIn(false);
-    // Additional logout logic if needed, e.g., clearing tokens, etc.
+    localStorage.removeItem('user');
   }
   
+  setCurrentUser(user:any){
+    localStorage.setItem('user', JSON.stringify(user));
+  }
 }

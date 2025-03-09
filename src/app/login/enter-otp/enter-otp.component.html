@@ -1,0 +1,24 @@
+<!-- enter-otp.component.html -->
+<div class="enter-otp-container">
+    <div class="enter-otp-box">
+      <h3>Enter OTP</h3>
+      <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>OTP</mat-label>
+          <input matInput formControlName="otp" type="text" />
+          <mat-error *ngIf="otpForm.get('otp')?.hasError('required')">
+            OTP is required
+          </mat-error>
+          <mat-error *ngIf="otpForm.get('otp')?.hasError('minlength') || otpForm.get('otp')?.hasError('maxlength')">
+            OTP must be 6 digits long
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!otpForm.valid">
+          Submit
+        </button>
+      </form>
+      <button mat-button color="accent" (click)="goToLogin()">
+        Go to Login Screen
+      </button>
+    </div>
+  </div>

@@ -1,0 +1,30 @@
+
+<h3>Profile Details</h3>
+<div *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+
+</div>
+<div *ngIf="!isLoading">
+  <div class="profile-details">
+    <div class="profile-icon">
+      <img src="/assets/profile.png" alt="Profile Icon" />
+    </div>
+    <h4>{{firstName}} {{lastName}}
+    </h4>
+    <p>Email: {{email}}</p>
+    <p>Position: Software Engineer</p>
+    <!-- Add more profile details as needed -->
+
+    <div class="resume-upload">
+      <h4>Upload Resume</h4>
+      <input type="file" (change)="onFileSelected($event)" />
+      <div *ngIf="resumeUrl">
+        <h4>Uploaded Resume</h4>
+        <a [href]="resumeUrl" target="_blank">View Resume</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

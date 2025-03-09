@@ -1,1 +1,18 @@
-
+<!-- home.component.html -->
+<div class="home-container">
+  <div class="section profile-section">
+   
+    <app-profile></app-profile>
+  </div>
+  <div class="section updates-section">
+    <h3>Job Posts / Updates</h3>
+    <div class="job-posts-container">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <app-job-posts *ngIf="!isLoading" [jobPosts]="jobPosts"></app-job-posts>
+    </div>
+  </div>
+  <div class="section blank-section">
+    <h3>Applied Jobs</h3>
+    <!-- This section is intentionally left blank for now -->
+  </div>
+</div>
