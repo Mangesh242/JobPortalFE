@@ -7,13 +7,20 @@ import { ProfileComponent } from '../profile/profile.component';
 import { JobpostService } from '../services/jobpost.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
+import { AppliedjobComponent } from '../appliedjob/appliedjob.component';
+import { AppliedJobsComponent } from '../applied-jobs/applied-jobs.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
   imports: [JobPostsComponent,
     ProfileComponent,
     MatProgressSpinnerModule,
-    CommonModule
+    CommonModule,
+    AppliedJobsComponent,
+    MatIconModule,
+    MatButtonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -22,7 +29,11 @@ export class HomeComponent implements OnInit {
   jobPosts:any[] = [
     
   ];
+  appliedJobPosts:any[] = [
+  ];
   isLoading = true;
+  isLoadingAppliedJobPosts = true;
+
   constructor(private authService: AuthService,
      private router: Router,
      private jobPostService: JobpostService) {
@@ -38,9 +49,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadJobPosts();
+    this.loadAppliedJobs();
   }
 
   loadJobPosts() {
+    
     console.log("Loading job posts");
     this.jobPostService.getJobPosts().subscribe(
       (data) => {
@@ -53,4 +66,28 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+
+  
+    loadAppliedJobs() {
+      this.isLoadingAppliedJobPosts=true;
+      console.log("Loading applied jobs");
+      let user=localStorage.getItem('user');
+      let userId="";
+      if(user){
+          userId=JSON.parse(user).id;
+      }
+      this.jobPostService.getAppliedJobs(userId).subscribe(
+        (data) => {
+          console.log('Applied jobs:', data);
+          this.appliedJobPosts = data as any[];
+
+          this.isLoadingAppliedJobPosts=false;
+        },
+        (error) => {
+          console.error('Error loading applied jobs', error);
+        }
+      );
+    }
+  
+
 }

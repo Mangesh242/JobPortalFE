@@ -8,6 +8,14 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
+  private userId="";
+
+  setUserId(userId: any) {
+  this.userId=userId;
+  }
+  get getUserId() {
+    return this.userId;
+  }
   private email ="";
   
   setEmailAddress(email: any) {

@@ -1,5 +1,5 @@
 <!-- signup.component.html -->
-<div style="margin-top: 10%"></div>
+<!-- <div style="margin-top: 10%"></div>
 <div class="signup-container">
   <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
     <div>
@@ -59,7 +59,7 @@
         #phoneInput="ngModel"
       />
 
-    <!-- Employer attribute -->
+    
      <div *ngIf="isEmployer">
       <label for="company">Company:</label>
       <input
@@ -75,5 +75,64 @@
      </div>
    
     <button type="submit" [disabled]="!signupForm.form.valid">Sign Up</button>
+  </form>
+</div> -->
+
+
+<div style="margin-top: 5%"></div>
+<div class="signup-container">
+  <h1>New Form</h1>
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmitNewForm()">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error *ngIf="signupForm.get('username')?.hasError('required')">Username is required.</mat-error>
+      <mat-error *ngIf="signupForm.get('username')?.hasError('minlength')">Username must be at least 3 characters long.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required.</mat-error>
+      <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at least 6 characters long.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="signupForm.get('name')?.hasError('required')">Name is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</mat-error>
+      <mat-error *ngIf="signupForm.get('email')?.hasError('pattern')">Invalid email address.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone" />
+      <mat-error *ngIf="signupForm.get('phone')?.hasError('required')">Phone number is required.</mat-error>
+      <mat-error *ngIf="signupForm.get('phone')?.hasError('pattern')">Phone number must be 10 digits long.</mat-error>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="" disabled>Select your role</mat-option>
+        <mat-option value="employer">Employer</mat-option>
+        <mat-option value="employee">Employee</mat-option>
+      </mat-select>
+      <mat-error *ngIf="signupForm.get('role')?.hasError('required')">Role is required.</mat-error>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill" *ngIf="isEmployer">
+      <mat-label>Company</mat-label>
+      <input matInput formControlName="company" />
+      <mat-error *ngIf="signupForm.get('company')?.hasError('required')">Company name is required.</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">Sign Up</button>
   </form>
 </div>

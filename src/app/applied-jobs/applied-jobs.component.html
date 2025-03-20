@@ -1,0 +1,7 @@
+<div *ngFor="let job of appliedJobPosts" class="job-post" style="border-bottom: 1px solid blueviolet;">
+  <h4>Title: {{ job.jobTitle }}</h4>
+  <p>Status: {{ job.status }}</p>
+  <p><strong>Applied Date:</strong> {{ job.applicationDate }}</p>
+  <button (click)="seeAppliedJob(job)">see more</button>
+  <!-- <p>-----------------------------------</p> -->
+</div>

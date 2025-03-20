@@ -18,7 +18,7 @@
   /* profile-details.component.scss */
 
   .updates-section {
-    flex: 8; /* 80% of the container width */
+    flex: 6; /* 80% of the container width */
     display: flex;
     flex-direction: column;
   }
@@ -30,6 +30,6 @@
   }
   
   .blank-section {
-    flex: 1; /* 10% of the container width */
+    flex: 3; /* 10% of the container width */
     border-right: none;
   }

@@ -9,34 +9,38 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
-import { JobpostService } from '../../services/jobpost.service';
+import { JobpostService } from '../../../services/jobpost.service';
+import { AuthService } from '../../../services/auth.service';
 
 
 @Component({
-  selector: 'app-dashboard',
-  imports: [ FormsModule,
-      RouterModule,
-      MatProgressSpinnerModule,
-      CommonModule,
-      MatInputModule,
-      MatButtonModule,
-      MatFormFieldModule,
-      MatGridListModule,
-      FlexLayoutModule,
-      MatSnackBarModule,
-      CommonModule,
-      ReactiveFormsModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  selector: 'app-create-job-posts',
+  imports: [
+    FormsModule,
+          RouterModule,
+          MatProgressSpinnerModule,
+          CommonModule,
+          MatInputModule,
+          MatButtonModule,
+          MatFormFieldModule,
+          MatGridListModule,
+          FlexLayoutModule,
+          MatSnackBarModule,
+          CommonModule,
+          ReactiveFormsModule
+  ],
+  templateUrl: './create-job-posts.component.html',
+  styleUrl: './create-job-posts.component.scss'
 })
-export class DashboardComponent implements OnInit {
+export class CreateJobPostsComponent {
   jobForm: FormGroup;
   jobPosts: any[] = [];
   userId: any;
-
+  isLoading: boolean = false;
   constructor(private fb: FormBuilder,
      private router: Router,
-    private jobService: JobpostService) {
+    private jobService: JobpostService,
+  private authSerivce:AuthService) {
     this.jobForm = this.fb.group({
       employerId: [this.userId],
       title: ['', Validators.required],
@@ -52,14 +56,30 @@ export class DashboardComponent implements OnInit {
 
   
   ngOnInit(): void {
+    this.isLoading=true;
+  
+    
     const user=localStorage.getItem('user');
     if (user) {
       this.userId = JSON.parse(user).id;
+      this.authSerivce.setUserId(this.userId);
+      
       console.log('User Id:', this.userId);
+      this.loadMyJobPosts();
     } else {
       // Handle the case when user is null
       this.router.navigate(['/login']);
     }
+  }
+  loadMyJobPosts() {
+    this.isLoading=true;
+    this.userId=this.authSerivce.getUserId;
+
+    this.jobService.getMyJobPosts(this.userId).subscribe((res) => {
+      this.jobPosts = res as any[];
+      console.log('Job Posts:', this.jobPosts);
+      this.isLoading=false;
+    });
   }
   onSubmit() {
     if (this.jobForm.valid) {
@@ -67,9 +87,7 @@ export class DashboardComponent implements OnInit {
       this.jobService.createJobPost(this.jobForm.value).subscribe((res) => {
         console.log('Job Post Created:', res);
       });
-
-      debugger;
-      this.jobPosts.push(this.jobForm.value);
+      // this.jobPosts.push(this.jobForm.value);
       this.jobForm.reset();
     }
   }

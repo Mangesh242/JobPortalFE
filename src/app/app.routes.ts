@@ -6,7 +6,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
 import { CreateNewPasswordComponent } from './login/create-password/create-password.component';
 import { EnterOtpComponent } from './login/enter-otp/enter-otp.component';
-import { DashboardComponent } from './home/dashboard/dashboard.component';
+import { CreateJobPostsComponent } from './home/job-posts/create-job-posts/create-job-posts.component';
+import { AppliedjobComponent } from './appliedjob/appliedjob.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'forgotp', component: ForgotPasswordComponent },
   { path: 'create-new-password', component: CreateNewPasswordComponent },
   { path: 'enter-otp', component: EnterOtpComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'createjobpost', component: CreateJobPostsComponent },
+  {path:'appliedjob',component:AppliedjobComponent}
 ];

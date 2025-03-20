@@ -12,7 +12,8 @@
     </div>
   </div>
   <div class="section blank-section">
-    <h3>Applied Jobs</h3>
-    <!-- This section is intentionally left blank for now -->
+    <h3>  <mat-icon (click)="loadAppliedJobs()">refresh</mat-icon>  Applied Jobs </h3>
+    <mat-spinner *ngIf="isLoadingAppliedJobPosts"></mat-spinner>
+    <app-applied-jobs *ngIf="!isLoadingAppliedJobPosts" [appliedJobPosts]="appliedJobPosts">  </app-applied-jobs>
   </div>
 </div>

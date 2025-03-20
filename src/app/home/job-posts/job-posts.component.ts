@@ -3,6 +3,7 @@ import { Component, Input,OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { JobpostService } from '../../services/jobpost.service';
 
 @Component({
   selector: 'app-job-posts',
@@ -16,7 +17,9 @@ export class JobPostsComponent implements OnInit {
   userId:any;
 
 
-  constructor(private router: Router,private authService:AuthService) {}
+  constructor(private router: Router,private authService:AuthService,
+    private jobService: JobpostService
+  ) {}
 
   ngOnInit() {
     const user=localStorage.getItem('user');
@@ -39,13 +42,23 @@ export class JobPostsComponent implements OnInit {
   }
 
   applyJob(job: any) {
+    debugger
     console.log('Applying for job:', job);
+
+    this.jobService.applyJob(job.id, this.userId,job.title).subscribe((data) => {
+      console.log('Job applied:', data);
+      alert('Job applied successfully');
+    },
+    (error)=>{
+      console.log('Error:',error);
+      alert('Error while applying for job');
+    });
     // Add your logic to handle job application here
   }
   createJobPost() {
     console.log('Creating job post');
     // Add your logic to create a job post here
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/createjobpost']);
   }
 
   showJobPost(){
