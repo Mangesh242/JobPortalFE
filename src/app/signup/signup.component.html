@@ -25,27 +25,17 @@
       />
     </div>
     <div>
-      <label for="firstName">First Name:</label>
+      <label for="name">Name:</label>
       <input
         type="text"
-        id="firstName"
+        id="name"
         required
-        [(ngModel)]="firstName"
-        name="firstName"
-        #firstNameInput="ngModel"
+        [(ngModel)]="name"
+        name="name"
+        #nameInput="ngModel"
       />
     </div>
-    <div>
-      <label for="lastName">Last Name:</label>
-      <input
-        type="text"
-        id="lastName"
-        required
-        [(ngModel)]="lastName"
-        name="lastName"
-        #lastNameInput="ngModel"
-      />
-    </div>
+ 
     <div>
       <label for="email">Email:</label>
       <input
@@ -57,6 +47,33 @@
         #emailInput="ngModel"
       />
     </div>
+
+    <div>
+      <label for="phone">Phone:</label>
+      <input
+        type="text"
+        id="phone"
+        required
+        [(ngModel)]="phone"
+        name="phone"
+        #phoneInput="ngModel"
+      />
+
+    <!-- Employer attribute -->
+     <div *ngIf="isEmployer">
+      <label for="company">Company:</label>
+      <input
+        type="text"
+        id="company"
+        required
+        [(ngModel)]="company"
+        name="company"
+        #companyInput="ngModel"
+      />
+      
+     </div>
+     </div>
+   
     <button type="submit" [disabled]="!signupForm.form.valid">Sign Up</button>
   </form>
 </div>

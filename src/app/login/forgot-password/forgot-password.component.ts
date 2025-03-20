@@ -53,6 +53,7 @@ export class ForgotPasswordComponent {
     if (this.forgotPasswordForm.valid) {
       const email = this.forgotPasswordForm.value.email;
       console.log('Forgot Password request for email:', email);
+      this.authService.setEmailAddress(email);
       // Add your logic to handle the forgot password request here
       
       debugger;

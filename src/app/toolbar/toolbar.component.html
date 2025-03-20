@@ -2,7 +2,7 @@
   <button mat-icon-button (click)="sidenav.toggle()" aria-label="Toggle sidenav"  [disabled]="!authService.isLoggedIn">
     <mat-icon>menu</mat-icon>
   </button>
-  <span style="color: black;">Labor Management</span>
+  <span style="color: black; cursor: pointer;" (click)="routeToPage('home')"> Labor Management</span>
   <!-- <app-search/> -->
 
   <span class="example-spacer"></span>

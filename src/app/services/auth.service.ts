@@ -1,17 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { env } from 'process';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private email ="";
   
-  private apiUrl = 'http://localhost:8080/api/v1'; // Replace with your Spring Boot API URL
+  setEmailAddress(email: any) {
+    this.email=email
+  }
+  get getEmailAddress() {
+    return this.email;
+  }
+
+  
+  private apiUrl = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) {}
   private LoggedInStatus:boolean = false;
+  private userType: string = 'Ind';
 
+
+
+  setUserType(userType: string) {
+    this.userType = userType;
+  }
+  get getUserType() {
+    return this.userType;
+  }
+  
   setLoggedIn(value:boolean){
     this.LoggedInStatus = value;
   }
@@ -33,28 +54,46 @@ export class AuthService {
     });
   }
 
-  signup(
+  signupIndividual(
     username: string,
     password: string,
-    firstName: string,
-    lastName: string,
-    email: string
+    name:string,
+    email: string,
+    phone:string,
+    profile:string
   ): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiUrl}/signup`, {
+    return this.httpClient.post<any>(`${this.apiUrl}/signupInd`, {
       username,
       password,
-      firstName,
-      lastName,
+      name,
       email,
+      phone,
+      profile
     });
   }
+  signupEmployer(
+    username: string,
+    password: string,
+    name:string,
+    email: string,
+    profile: string,
+    companyName: string,
+    phoneNumber: string
 
- updatePassword(password: string): Observable<any> {
-    const user = localStorage.getItem('user');
-    const email = user ? JSON.parse(user).email : null;
-    if(email === null){
-      console.log("No logged in user found");
-    }
+  ): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiUrl}/signupEmp`, {
+      username,
+      password,
+     name,
+     email,
+     profile,
+     companyName,
+     phoneNumber
+    });
+  }
+ updatePassword(password: string,email:string): Observable<any> {
+  debugger
+  
     return this.httpClient.post<any>(`${this.apiUrl}/update-password`, {
       email,
       password

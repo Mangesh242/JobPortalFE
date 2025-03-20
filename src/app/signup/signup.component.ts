@@ -1,57 +1,115 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
+import { UserType } from '../utils/confirmation-dialog/UserType';
+import { profile } from 'console';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
-  imports: [FormsModule,RouterModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   username: string = '';
   password: string = '';
-  firstName: string = '';
-  lastName: string = '';
+  name: string = '';
   email: string = '';
+  role: string = '';
 
-  constructor(private authService: AuthService,
-    private router: Router
-  ) {}
+  profile: string = '';
+  isEmployer: boolean = false;
+  phone: string = '';
+  company: string = '';
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.profile = this.authService.getUserType;
+    if (this.profile === UserType.EMPLOYER) {
+      this.isEmployer = true;
+    }
+    console.log(this.profile);
+  }
 
   onSubmit() {
     if (
+      !this.isEmployer &&
       this.username &&
       this.password &&
-      this.firstName &&
-      this.lastName &&
-      this.email
+      this.name &&
+      this.email &&
+      this.phone
     ) {
-      
+      const signupData = {
+        username: this.username,
+        password: this.password,
+        name: this.name,
+        email: this.email,
+        profile: UserType.INDIVIDUAL,
+        phone: this.phone,
+      };
+
       this.authService
-        .signup(
+        .signupIndividual(
           this.username,
           this.password,
-          this.firstName,
-          this.lastName,
-          this.email
+          this.name,
+          this.email,
+          this.phone,
+          UserType.INDIVIDUAL
         )
-        .subscribe(
-          (response) => {
-            console.log('Signup successful', response);
-            // Handle successful signup, e.g., redirect to login page
-            alert('Signup successful');
-            this.router.navigate(['login']);
+        .subscribe((response) => {
+          console.log('User signed up', response);
+          alert('User signed up');
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          console.log('Error:', error);
+          alert('Error signing up');
+        });
 
-          },
-          (error) => {
-            console.error('Signup failed', error);
-            // Handle signup error, e.g., show error message
-          }
-        );
+      // Add your logic to handle the form submission here
+      console.log('Form submitted', signupData);
     } else {
-      console.log('Form is invalid');
+      if (
+        this.username &&
+        this.password &&
+        this.name &&
+        this.email &&
+        this.phone &&
+        this.company
+      ) {
+        const signupData = {
+          username: this.username,
+          password: this.password,
+          name: this.name,
+          email: this.email,
+          profile: UserType.EMPLOYER,
+          phone: this.phone,
+          company: this.company,
+        };
+        debugger;
+
+        this.authService
+          .signupEmployer(
+            this.username,
+            this.password,
+            this.name,
+            this.email,
+            UserType.EMPLOYER,
+            this.company,
+            this.phone
+          )
+          .subscribe((response) => {
+            console.log('Employer signed up', response);
+            alert('User signed up');
+            this.router.navigate(['/login']);
+          });
+        // Add your logic to handle the form submission here
+        console.log('Form submitted', signupData);
+      }
     }
   }
 }

@@ -1,10 +1,11 @@
 <!-- job-posts.component.html -->
- <button mat-raised-button color="primary" (click)="createJobPost()">Create Job Post</button>
+ <button *ngIf="userType=='EMPLOYER'" mat-raised-button color="warn" (click)="createJobPost()">Create Job Post</button>
+ <!-- <button *ngIf="userType=='EMPLOYER'" mat-raised-button color="warn" (click)="showJobPost()">My Job Post</button> -->
 <div *ngFor="let job of jobPosts" class="job-post">
     <h4>{{ job.title }}</h4>
     <p>{{ job.description }}</p>
     <p><strong>Salary Range:</strong> {{ job.salaryRange }}</p>
     <p><strong>Location:</strong> {{ job.location }}</p>
     <p><strong>Job Type:</strong> {{ job.jobType }}</p>
-    <button mat-raised-button color="primary" (click)="applyJob(job)">Apply Job</button>
+    <button *ngIf="userType!='EMPLOYER'" mat-raised-button color="primary" (click)="applyJob(job)">Apply Job</button>
   </div>

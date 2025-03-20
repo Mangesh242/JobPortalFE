@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { UserType } from '../utils/confirmation-dialog/UserType';
 
 @Component({
   selector: 'app-login',
@@ -34,12 +35,30 @@ export class LoginComponent implements OnInit {
   password: string = '';
   isLoading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     debugger;
     if (this.authService.isLoggedIn) {
       this.router.navigate(['home']);
+    }
+  }
+
+  signUp(role: string) {
+    if (role === UserType.INDIVIDUAL) {
+      this.authService.setUserType(UserType.INDIVIDUAL);
+      console.log('Sign up as Individual');
+      // Add your logic for individual sign up here
+      this.router.navigate(['/signup']);
+    } else if (role === UserType.EMPLOYER) {
+      this.authService.setUserType(UserType.EMPLOYER);
+      console.log('Sign up as Employer');
+      // Add your logic for employer sign up here
+      this.router.navigate(['/signup']);
     }
   }
   onSubmit() {
@@ -50,9 +69,12 @@ export class LoginComponent implements OnInit {
           console.log('Login successful', response);
           // Handle successful login, e.g., store token, redirect, etc.
           this.isLoading = false;
-          this.router.navigate(['home']);
+
           this.authService.setCurrentUser(response);
+          debugger;
+          this.authService.setUserType(response.profileType);
           this.authService.setLoggedIn(true);
+          this.router.navigate(['home']);
         },
         (error) => {
           if (error.status === 401) {

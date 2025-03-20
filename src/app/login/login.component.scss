@@ -10,8 +10,6 @@
 }
 
 .background-container {
-  
-
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -51,4 +49,10 @@
 
 .signup-link a:hover {
   text-decoration: underline;
+}
+.signup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
 }

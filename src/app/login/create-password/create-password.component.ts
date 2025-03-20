@@ -57,11 +57,22 @@ export class CreateNewPasswordComponent {
   onSubmit() {
     if (this.createPasswordForm.valid) {
       const password = this.createPasswordForm.value.password;
+      const user = localStorage.getItem('user');
+      let email = user ? JSON.parse(user).email : null;
+      if(email === null){
+        email=this.authService.getEmailAddress;
+        console.log("No logged in user found");
+      }
       console.log('New Password:', password);
       // Add your logic to handle the password update here
-      this.authService.updatePassword(password).subscribe((res) => {
+      this.authService.updatePassword(email,password).subscribe((res) => {
         console.log('Password updated:', res);
+        alert('Password updated successfully');
         this.router.navigate(['/login']);
+      },
+      (err) => {
+        console.log('Error updating password:', err);
+        alert('Error updating password');
       }
       );
     }
